@@ -266,11 +266,31 @@
                 snap.pay(data.token, {
                     // Optional
                     onSuccess: function(result) {
-                        /* You may add your own js here, this is just example */
-                        document.getElementById('result-json').innerHTML += JSON
-                            .stringify(
-                                result, null, 2);
-                    },
+                          // Kirim data ke server untuk disimpan
+                          const formData = new FormData(form);
+
+                          formData.append("transactionId", result.transaction_id);
+                          formData.append("statusPembayaran", result.transaction_status);
+
+                          fetch('simpan_pesanan.php', {
+                              method: 'POST',
+                              body: formData
+                          })
+                          .then(res => res.json())
+                          .then(data => {
+                              if (data.status === "success") {
+                                  alert("Pesanan berhasil disimpan!");
+                                  window.location.href = "keranjang.php";
+                              } else {
+                                  alert("Gagal menyimpan pesanan: " + data.message);
+                              }
+                          })
+                          .catch(err => {
+                              console.error("Error saat simpan:", err);
+                              alert("Terjadi kesalahan saat menyimpan pesanan.");
+                          });
+                      },
+
                     // Optional
                     onPending: function(result) {
                         /* You may add your own js here, this is just example */
@@ -312,23 +332,6 @@
 
     paketSelect.addEventListener("change", updateHarga);
     metodeSelect.addEventListener("change", updateHarga);
-    document.getElementById("formPesanan").addEventListener("submit", function(e) {
-        e.preventDefault();
-
-        fetch("simpan_pesanan.php", {
-                method: "POST",
-                body: new FormData(this)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success") {
-                    alert("Pesanan berhasil disimpan!");
-                    window.location.href = "keranjang.php";
-                } else {
-                    alert("Gagal menyimpan pesanan: " + data.message);
-                }
-            });
-    });
     </script>
 
 
