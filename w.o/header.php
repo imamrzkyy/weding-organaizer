@@ -111,7 +111,7 @@
                 <ul class="navbar-nav ms-auto d-flex flex-row gap-4">
                     <!-- Keranjang Belanja -->
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="cart.php">
+                        <a class="nav-link text-white" href="keranjang.php">
                             <i class="bi bi-cart cart-icon"></i>
                             <span class="cart-badge"><?php echo $jumlah_pesanan; ?></span>
                         </a>
