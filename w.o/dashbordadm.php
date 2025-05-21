@@ -1,3 +1,17 @@
+<?php
+// Database connection
+$koneksi = new mysqli("localhost", "root", "", "wo_web");
+
+if ($koneksi->connect_error) {
+    die("Koneksi gagal: " . $koneksi->connect_error);
+}
+
+// Query untuk mengambil data pelanggan
+$query = "SELECT * FROM pelanggan";
+// Cek struktur tabel terlebih dahulu untuk menghindari error kolom tidak ditemukan
+$resultPelanggan = $koneksi->query($query);
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -25,6 +39,9 @@
     .navbar-maroon {
       background-color: #800000;
     }
+    .bg-maroon {
+      background-color: #800000;
+    }
   </style>
 </head>
 <body>
@@ -42,7 +59,7 @@
         <a href="#jadwal">Kelola Jadwal Acara</a>
         <a href="#laporan">Laporan Transaksi</a>
         <hr>
-        <a href="#">Logout</a>
+        <a href="login.php">Logout</a>
       </div>
     </nav>
 
@@ -100,18 +117,24 @@
                   <th>ID</th>
                   <th>Nama</th>
                   <th>Email</th>
-                  <th>Telepon</th>
                   <th>Alamat</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>PLG001</td>
-                  <td>Rina Andini</td>
-                  <td>rina@mail.com</td>
-                  <td>08123456789</td>
-                  <td>Jakarta</td>
-                </tr>
+                <?php if ($resultPelanggan && $resultPelanggan->num_rows > 0): ?>
+                  <?php while($row = $resultPelanggan->fetch_assoc()): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($row['idPelanggan'] ?? $row['id_pelanggan'] ?? '') ?></td>
+                      <td><?= htmlspecialchars($row['nama'] ?? $row['nama_pelanggan'] ?? '') ?></td>
+                      <td><?= htmlspecialchars($row['email'] ?? '') ?></td>
+                      <td><?= htmlspecialchars($row['alamat'] ?? '') ?></td>
+                    </tr>
+                  <?php endwhile; ?>
+                <?php else: ?>
+                  <tr>
+                    <td colspan="4" class="text-center">Tidak ada data pelanggan.</td>
+                  </tr>
+                <?php endif; ?>
               </tbody>
             </table>
           </div>
@@ -181,5 +204,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?php $koneksi->close(); ?>
 </body>
 </html>

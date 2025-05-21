@@ -16,6 +16,10 @@ include 'header.php'
     <meta charset="UTF-8">
     <title>Keranjang Pemesanan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript"
+    src="https://app.midtrans.com/snap/snap.js"
+    data-client-key="SB-Mid-client-BLUyugD7t0NiNWmy"></script>
+
 </head>
 <body class="bg-light">
 
@@ -80,16 +84,20 @@ include 'header.php'
                             }
                             else {
                                 // Pembayaran Lengkap
-                                echo '<button id="pay-button" class="btn btn-danger text-white">Bayar Sekarang</button>';
+                                echo '<button class="btn btn-danger text-white pay-button" 
+                                             data-id="' . htmlspecialchars($row['id']) . '" 
+                                             data-amount="' . htmlspecialchars($sisaPembayaran) . '">
+                                        Bayar Sekarang
+                                      </button>';
                             }
+                            
+                            
                             
                             } else {
                                 // Menunggu Pembayaran
                                 echo '<span class="text-muted">Pembayaran Lengkap</span>';
                             }
                     ?>
-
-
 
                     </td>
                 </tr>
