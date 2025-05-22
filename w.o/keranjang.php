@@ -71,32 +71,18 @@ include 'header.php'
                     </td>
                     <td>Rp <?= number_format($jumlahDibayar, 0, ',', '.') ?></td>
                     <td>
+                       
                     <?php
-                        if ($row['metodePembayaran'] == 'lunas' || $row['metodePembayaran'] == 'DP') {
-                            if ($sisaPembayaran > 0) {
-                                // Menunggu Pembayaran + tombol Bayar Sisa
-                                echo '<span class="text-success me-2">Menunggu Pembayaran</span>';
-                                echo '<form action="bayar_sisa.php" method="post" class="d-inline">';
-                                echo '<input type="hidden" name="idPesanan" value="' . htmlspecialchars($row['idPesanan']) . '">';
-                                echo '<input type="hidden" name="sisaPembayaran" value="' . htmlspecialchars($sisaPembayaran) . '">';
-                                echo '<button type="submit" class="btn btn-sm btn-primary">Bayar Sisa Rp ' . number_format($sisaPembayaran, 0, ',', '.') . '</button>';
-                                echo '</form>';
-                            }
-                            else {
-                                // Pembayaran Lengkap
-                                echo '<button class="btn btn-danger text-white pay-button" 
-                                             data-id="' . htmlspecialchars($row['id']) . '" 
-                                             data-amount="' . htmlspecialchars($sisaPembayaran) . '">
-                                        Bayar Sekarang
-                                      </button>';
-                            }
-                            
-                            
-                            
-                            } else {
-                                // Menunggu Pembayaran
-                                echo '<span class="text-muted">Pembayaran Lengkap</span>';
-                            }
+                    if($row['metodePembayaran'] == 'Lunas') {
+                        echo '<span class="text-muted">Pembayaran Lengkap</span>';
+                    } else {
+                        echo '<div class="text-success me-2">Menunggu Pembayaran</div>';
+                        echo '<form method="post" class="d-inline"  id="formPesanan">';
+                        echo '<input type="hidden" name="idPesanan" value="' . htmlspecialchars($row['id']) . '">';
+                        echo '<input type="hidden" name="jumlahPembayaran" id="sisaPembayaran" value="' . htmlspecialchars($row['jumlahPembayaran']) . '">';
+                        echo '<button type="button" id="pay-button"  class="btn btn-sm btn-primary">Bayar Sisa Rp ' . number_format($row['jumlahPembayaran'], 0, ',', '.') . '</button>';
+                        echo '</form>';
+                    }
                     ?>
 
                     </td>
@@ -110,6 +96,80 @@ include 'header.php'
     
     
 </div>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-BLUyugD7t0NiNWmy">
+    </script>
+<script>
+    const payButton = document.getElementById('pay-button')
+    const form = document.getElementById("formPesanan")
+    const sisaPembayaran = document.getElementById("sisaPembayaran");
+    const idPesanan = document.getElementById("idPesanan");
+
+payButton.addEventListener("click", async (e) => {
+        e.preventDefault()
+
+        const formData = new FormData(form)
+
+
+        await fetch('checkout-process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(async (response) => {
+                const data = await response.json()
+
+                snap.pay(data.token, {
+                    // Optional
+                    onSuccess: function(result) {
+                          // Kirim data ke server untuk disimpan
+                          const formDataUpdate = new FormData();
+
+                          formDataUpdate.append("id", formData.get('idPesanan'));
+                          formDataUpdate.append("jumlahPembayaran", Number(formData.get('jumlahPembayaran')));
+
+
+                          fetch('update_pesanan.php', {
+                              method: 'POST',
+                              body: formDataUpdate
+                          })
+                          .then(res => res.json())
+                          .then(data => {
+                              if (data.status === "success") {
+                                  alert("Pesanan berhasil disimpan!");
+                                  window.location.href = "keranjang.php";
+                              } else {
+                                  alert("Gagal menyimpan pesanan: " + data.message);
+                              }
+                          })
+                          .catch(err => {
+                              console.log("Error saat simpan:", err);
+                              alert("Terjadi kesalahan saat menyimpan pesanan.");
+                          });
+                      },
+
+                    // Optional
+                    onPending: function(result) {
+                        /* You may add your own js here, this is just example */
+                        document.getElementById('result-json').innerHTML += JSON
+                            .stringify(
+                                result, null, 2);
+                    },
+                    // Optional
+                    onError: function(result) {
+                        /* You may add your own js here, this is just example */
+                        document.getElementById('result-json').innerHTML += JSON
+                            .stringify(
+                                result, null, 2);
+                    }
+                });
+            })
+            .catch(() => {
+
+            })
+
+
+    })
+</script>
+
 <?php
 include 'footer.php'
 ?>
