@@ -7,7 +7,7 @@ if (isset($_POST['btnLogin'])) {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     // Cek admin
-    $sql_admin = "SELECT * FROM admin WHERE email='$email' AND password='$password'";
+    $sql_admin = "SELECT * FROM admin WHERE email_admin='$email' AND password_admin='$password'";
     $query_admin = mysqli_query($conn, $sql_admin);
 
     // Cek user
