@@ -107,7 +107,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Paket Silver</h5>
                         <p class="card-text">Cocok untuk pesta intimate & sederhana.</p>
-                        <div class="price-tag">Rp 15.000.000</div>
+                        <div class="price-tag">Rp 5.000.000</div>
                         <a href="paketsilver.php" class="btn btn-detail">Lihat Detail</a>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Paket Gold</h5>
                         <p class="card-text">Solusi lengkap untuk pernikahan berkelas.</p>
-                        <div class="price-tag">Rp 25.000.000</div>
+                        <div class="price-tag">Rp 8.000.000</div>
                         <a href="paketgold.php" class="btn btn-detail">Lihat Detail</a>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Paket Platinum</h5>
                         <p class="card-text">Untuk pesta megah dengan fasilitas eksklusif.</p>
-                        <div class="price-tag">Rp 35.000.000</div>
+                        <div class="price-tag">Rp 12.000.000</div>
                         <a href="paketplatinum.php" class="btn btn-detail">Lihat Detail</a>
                     </div>
                 </div>

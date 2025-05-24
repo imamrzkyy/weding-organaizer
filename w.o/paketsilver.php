@@ -99,7 +99,7 @@ include 'header.php'
 
         <div class="price-tag">Rp 15.000.000</div>
 
-        <a href="https://wa.me/62xxxxxxxxxx" target="_blank" class="btn-cs">💬 Konsultasi via WhatsApp</a>
+        <a href="https://wa.me/62895636125652" target="_blank" class="btn-cs">💬 Konsultasi via WhatsApp</a>
       </div>
     </div>
   </div>

@@ -35,7 +35,7 @@ include 'header.php'
                     <th>Paket</th>
                     <th>Tanggal Acara</th>
                     <th>Metode</th>
-                    <th>Status</th>
+                    <th>Status Pembayaran</th>
                     <th>Jumlah Dibayar</th>
                     <th>Aksi</th>
                 </tr>

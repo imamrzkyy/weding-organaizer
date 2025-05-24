@@ -438,7 +438,7 @@
                             <div>
                                 <h4 class="fw-bold">Adat Jawa Modern</h4>
                                 <p class="text-muted">
-                                    Diselenggarakan di Yogyakarta, acara ini memadukan adat Jawa klasik dengan
+                                    Diselenggarakan di Balai Krakatau, acara ini memadukan adat Jawa klasik dengan
                                     sentuhan
                                     modern minimalis. Kami menangani semua aspek mulai dari dekorasi, tata rias,
                                     hingga
@@ -446,7 +446,7 @@
                                 </p>
                                 <ul class="list-unstyled text-muted">
                                     <li><i class="bi bi-calendar-event"></i> 18 November 2024</li>
-                                    <li><i class="bi bi-geo-alt"></i> Royal Ambarrukmo Hotel, Yogyakarta</li>
+                                    <li><i class="bi bi-geo-alt"></i> Gedung Balai Krakatau, Bandar Lampung</li>
                                     <li><i class="bi bi-people-fill"></i> 500 Tamu Undangan</li>
                                 </ul>
                             </div>
