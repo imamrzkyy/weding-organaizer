@@ -463,18 +463,64 @@ $koneksi = new mysqli("localhost", "root", "", "wo_web");
     <!-- Modal 2 -->
     <div class="modal fade" id="portfolioModal2" tabindex="-1" aria-labelledby="portfolioModal2Label"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content border-0 rounded-4 overflow-hidden">
-                <div class="modal-header bg-maroon text-white">
-                    <h5 class="modal-title">Andre & Sheila</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <div class="modal-header bg-maroon text-white border-0">
+                    <h5 class="modal-title fw-bold" id="portfolioModal2Label">Pernikahan Agung & Syhntia</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-0">
-                    <img src="assets/img/portfolio2.jpg" class="img-fluid w-100" alt="">
-                    <div class="p-4">
-                        <p class="text-muted">Garden party intimate dengan tema rustic pastel di pinggir pantai
-                            Bali.
-                            Suasana romantis dengan lampu gantung dan bunga segar.</p>
+                <div class="modal-body">
+                    <div class="row g-0">
+                        <!-- Gambar dengan Carousel dan Padding -->
+                        <div class="col-md-6">
+                            <div class="p-3">
+                                <!-- Padding semua sisi -->
+                                <div id="portfolioCarousel1" class="carousel slide rounded" data-bs-ride="carousel">
+                                    <div class="carousel-inner rounded-3">
+                                        <div class="carousel-item active">
+                                            <img src="assets/img/photo-8.jpg" class="d-block w-100"
+                                                style="max-height: 300px; object-fit: cover;" alt="Slide 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="assets/img/bg_login.jpg" class="d-block w-100"
+                                                style="max-height: 300px; object-fit: cover;" alt="Slide 2">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="assets/img/photo-8.jpg" class="d-block w-100"
+                                                style="max-height: 300px; object-fit: cover;" alt="Slide 3">
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#portfolioCarousel1" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#portfolioCarousel1" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div class="col-md-6 d-flex flex-column justify-content-center p-4">
+                            <div>
+                                <h4 class="fw-bold">Adat Lampung</h4>
+                                <p class="text-muted">
+                                    Diselenggarakan di Ballroom Novotel, acara ini memadukan adat Jawa klasik dengan
+                                    sentuhan
+                                    modern minimalis. Kami menangani semua aspek mulai dari dekorasi, tata rias,
+                                    hingga
+                                    pengaturan kursi VIP.
+                                </p>
+                                <ul class="list-unstyled text-muted">
+                                    <li><i class="bi bi-calendar-event"></i> 18 November 2024</li>
+                                    <li><i class="bi bi-geo-alt"></i> Ballroom Novotel, Bandar Lampung</li>
+                                    <li><i class="bi bi-people-fill"></i> 1000 Tamu Undangan</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -484,24 +530,69 @@ $koneksi = new mysqli("localhost", "root", "", "wo_web");
     <!-- Modal 3 -->
     <div class="modal fade" id="portfolioModal3" tabindex="-1" aria-labelledby="portfolioModal3Label"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content border-0 rounded-4 overflow-hidden">
-                <div class="modal-header bg-maroon text-white">
-                    <h5 class="modal-title">Kevin & Lina</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <div class="modal-header bg-maroon text-white border-0">
+                    <h5 class="modal-title fw-bold" id="portfolioModal3Label">Pernikahan Dito & Kia</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-0">
-                    <img src="assets/img/portfolio3.jpg" class="img-fluid w-100" alt="">
-                    <div class="p-4">
-                        <p class="text-muted">Konsep internasional klasik elegan di ballroom hotel Jakarta
-                            dengan tata
-                            cahaya glamor dan orkestra mewah.</p>
+                <div class="modal-body">
+                    <div class="row g-0">
+                        <!-- Gambar dengan Carousel dan Padding -->
+                        <div class="col-md-6">
+                            <div class="p-3">
+                                <!-- Padding semua sisi -->
+                                <div id="portfolioCarousel1" class="carousel slide rounded" data-bs-ride="carousel">
+                                    <div class="carousel-inner rounded-3">
+                                        <div class="carousel-item active">
+                                            <img src="assets/img/photo-8.jpg" class="d-block w-100"
+                                                style="max-height: 300px; object-fit: cover;" alt="Slide 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="assets/img/bg_login.jpg" class="d-block w-100"
+                                                style="max-height: 300px; object-fit: cover;" alt="Slide 2">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="assets/img/photo-8.jpg" class="d-block w-100"
+                                                style="max-height: 300px; object-fit: cover;" alt="Slide 3">
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#portfolioCarousel1" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#portfolioCarousel1" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div class="col-md-6 d-flex flex-column justify-content-center p-4">
+                            <div>
+                                <h4 class="fw-bold">Adat Sunda</h4>
+                                <p class="text-muted">
+                                    Diselenggarakan di Ballroom Grand Mercure, acara ini memadukan adat Jawa klasik dengan
+                                    sentuhan
+                                    modern minimalis. Kami menangani semua aspek mulai dari dekorasi, tata rias,
+                                    hingga
+                                    pengaturan kursi VIP.
+                                </p>
+                                <ul class="list-unstyled text-muted">
+                                    <li><i class="bi bi-calendar-event"></i> 18 November 2024</li>
+                                    <li><i class="bi bi-geo-alt"></i> Ballroom Grand Mercure, Bandar Lampung</li>
+                                    <li><i class="bi bi-people-fill"></i> 700 Tamu Undangan</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <section id="testimoni" class="py-5" style="background: linear-gradient(to bottom right, #fff5e6, #f3c623);">
         <div class="container">
             <h2 class="text-center fw-bold mb-5 text-maroon">Apa Kata Klien Kami</h2>
@@ -535,7 +626,8 @@ $koneksi = new mysqli("localhost", "root", "", "wo_web");
                         <textarea class="form-control" id="isiTestimoni" name="isiTestimoni" rows="3"
                             required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-maroon ">Kirim Testimoni</button>
+                    <button type="submit" class="btn btn-maroon" style="color: white;">Kirim Testimoni</button>
+
                 </form>
             </div>
 
