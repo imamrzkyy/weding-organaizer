@@ -1,13 +1,13 @@
 <?php
-$koneksi = new mysqli("localhost", "root", "", "wo_web");
 
 // Simulasi session idPelanggan
-$idPelanggan = 'USR001';
 
+
+include 'header.php';
+$koneksi = new mysqli("localhost", "root", "", "wo_web");
+$idPelanggan = $_SESSION['ses_id'];
 $query = "SELECT * FROM pesanan WHERE idPelanggan = '$idPelanggan' ORDER BY tanggalPesan DESC";
-
 $result = $koneksi->query($query);
-include 'header.php'
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ include 'header.php'
             <tbody>
             <?php while($row = $result->fetch_assoc()): ?>
                 <tr>
-                    <td><?= isset($row['idPesanan']) ? htmlspecialchars($row['idPesanan']) : '-' ?></td>
+                    <td><?= isset($row['id']) ? htmlspecialchars($row['id']) : '-' ?></td>
                     <td><?= isset($row['namaPelanggan']) ? htmlspecialchars($row['namaPelanggan']) : '-' ?></td>
                     <td><?= isset($row['idPaket']) ? htmlspecialchars($row['idPaket']) : '-' ?></td>
                     <td><?= isset($row['tanggalPesan']) ? htmlspecialchars($row['tanggalPesan']) : '-' ?></td>
@@ -54,9 +54,9 @@ include 'header.php'
                             $jumlahDibayar = isset($row['jumlahPembayaran']) ? $row['jumlahPembayaran'] : 0;
                             $sisaPembayaran = $totalHarga - $jumlahDibayar;
 
-                            if ($row['metodePembayaran'] == 'lunas') {
+                            if ($row['metodePembayaran'] != 'Lunas') {
                                 if ($sisaPembayaran > 0) {
-                                    echo '<span class="badge bg-warning">Lunas</span>';
+                                    echo '<span class="badge bg-warning"></span>';
                                 } else {
                                     echo '<span class="badge bg-success">Belum Lunas</span>';
                                 }
@@ -69,18 +69,20 @@ include 'header.php'
 
 
                     </td>
-                    <td>Rp <?= number_format($jumlahDibayar, 0, ',', '.') ?></td>
+                    <td onclick="">Rp <?= number_format($jumlahDibayar, 0, ',', '.') ?></td>
                     <td>
-                       
                     <?php
-                    if($row['metodePembayaran'] == 'Lunas') {
-                        echo '<span class="text-muted">Pembayaran Lengkap</span>';
+                    if($row['statusPesanan'] == 'selesai' && $row['metodePembayaran'] == 'Lunas') {
+                        echo '<span class="text-muted">Pesanan Selesai</span>';
+                    } else if($row['statusPesanan'] == 'diproses' && $row['metodePembayaran'] == 'Lunas') 
+                    { 
+                        echo '<span class="text-primary">Pesanan Diproses</span>';
                     } else {
                         echo '<div class="text-success me-2">Menunggu Pembayaran</div>';
-                        echo '<form method="post" class="d-inline"  id="formPesanan">';
+                        echo '<form method="post" class="d-inline formPesanan" >';
                         echo '<input type="hidden" name="idPesanan" value="' . htmlspecialchars($row['id']) . '">';
                         echo '<input type="hidden" name="jumlahPembayaran" id="sisaPembayaran" value="' . htmlspecialchars($row['jumlahPembayaran']) . '">';
-                        echo '<button type="button" id="pay-button"  class="btn btn-sm btn-primary">Bayar Sisa Rp ' . number_format($row['jumlahPembayaran'], 0, ',', '.') . '</button>';
+                        echo '<button type="button"  class="pay-button btn btn-sm btn-primary">Bayar Sisa Rp ' . number_format($row['jumlahPembayaran'], 0, ',', '.') . '</button>';
                         echo '</form>';
                     }
                     ?>
@@ -99,15 +101,14 @@ include 'header.php'
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-BLUyugD7t0NiNWmy">
     </script>
 <script>
-    const payButton = document.getElementById('pay-button')
-    const form = document.getElementById("formPesanan")
+    const payButton = document.querySelectorAll('.pay-button')
+    const form = document.getElementsByClassName("formPesanan")
     const sisaPembayaran = document.getElementById("sisaPembayaran");
     const idPesanan = document.getElementById("idPesanan");
 
-payButton.addEventListener("click", async (e) => {
-        e.preventDefault()
-
-        const formData = new FormData(form)
+payButton.forEach(async(item, index) => {
+    item.addEventListener("click", async (e) => {
+        const formData = new FormData(form[index])
 
 
         await fetch('checkout-process.php', {
@@ -132,8 +133,30 @@ payButton.addEventListener("click", async (e) => {
                               body: formDataUpdate
                           })
                           .then(res => res.json())
-                          .then(data => {
+                          .then(async data => {
                               if (data.status === "success") {
+
+
+                                alert(data.message)
+                                 window.location.href = "keranjang.php";
+                                return;
+                                  // After successful update, check if full payment is done
+                                  const idPesanan = formData.get('idPesanan');
+                                  const jumlahDibayar = Number(formData.get('jumlahPembayaran'));
+
+                                  // Fetch totalHarga for this order
+                                  const response = await fetch(`get_total_harga.php?id=${idPesanan}`);
+                                  const result = await response.json();
+
+                                  if (result.totalHarga !== undefined && jumlahDibayar >= result.totalHarga) {
+                                      // Update statusPembayaran to 'Lunas'
+                                      await fetch('update_status_pembayaran.php', {
+                                          method: 'POST',
+                                          headers: { 'Content-Type': 'application/json' },
+                                          body: JSON.stringify({ id: idPesanan, status: 'Lunas' })
+                                      });
+                                  }
+
                                   alert("Pesanan berhasil disimpan!");
                                   window.location.href = "keranjang.php";
                               } else {
@@ -165,7 +188,7 @@ payButton.addEventListener("click", async (e) => {
             .catch(() => {
 
             })
-
+})
 
     })
 </script>

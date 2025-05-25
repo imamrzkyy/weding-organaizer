@@ -1,5 +1,7 @@
 <?php
     include 'header.php';
+    include 'config.php';
+    $paket = $conn->query("SELECT * FROM paketpernikahan");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -96,59 +98,48 @@
 
 <body>
 
-    <div class="container py-5">
-        <h2 class="section-title">Pilihan Paket Wedding Organizer</h2>
-        <div class="row g-4">
+<div class="container py-5">
+    <h2 class="section-title">Pilihan Paket Wedding Organizer</h2>
+    <div class="row g-4">
+        <?php
+        include 'config.php';
+        $paket = $conn->query("SELECT * FROM paketpernikahan ORDER BY idPaket ASC");
+        while ($p = $paket->fetch_assoc()):
+            $filename = strtolower(str_replace(' ', '', $p['namaPaket'])) . '.php';
+        ?>
+        <div class="col-md-4">
+            <div class="card card-package h-100">
+                <img src="assets/img/photo-8.jpg" class="card-img-top" alt="<?= htmlspecialchars($p['namaPaket']) ?>">
+                <div class="card-body">
+                    <h5 class="card-title"><?= htmlspecialchars($p['namaPaket']) ?></h5>
+                    <p class="card-text"><?= htmlspecialchars($p['deskripsi']) ?></p>
+                    <div class="price-tag">Rp <?= number_format($p['harga'], 0, ',', '.') ?></div>
+                    <?php
+                      // mapping manual ID ke file detail
+                      $map = [
+                        'paket1' => 'paketsilver.php',
+                        'paket2' => 'paketgold.php',
+                        'paket3' => 'paketplatinum.php',
+                        'paket4' => 'paketdiamon.php'
+                      ];
+                    ?>
+                    <a href="<?= $map[$p['idPaket']] ?? '#' ?>" class="btn btn-detail">Lihat Detail</a>
 
-            <!-- Paket Silver -->
-            <div class="col-md-4">
-                <div class="card card-package h-100">
-                    <img src="assets/img/photo-8.jpg" class="card-img-top" alt="Paket Silver">
-                    <div class="card-body">
-                        <h5 class="card-title">Paket Silver</h5>
-                        <p class="card-text">Cocok untuk pesta intimate & sederhana.</p>
-                        <div class="price-tag">Rp 5.000.000</div>
-                        <a href="paketsilver.php" class="btn btn-detail">Lihat Detail</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Paket Gold -->
-            <div class="col-md-4">
-                <div class="card card-package h-100">
-                    <img src="assets/img/photo-8.jpg" class="card-img-top" alt="Paket Gold">
-                    <div class="card-body">
-                        <h5 class="card-title">Paket Gold</h5>
-                        <p class="card-text">Solusi lengkap untuk pernikahan berkelas.</p>
-                        <div class="price-tag">Rp 8.000.000</div>
-                        <a href="paketgold.php" class="btn btn-detail">Lihat Detail</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Paket Platinum -->
-            <div class="col-md-4">
-                <div class="card card-package h-100">
-                    <img src="assets/img/photo-8.jpg" class="card-img-top" alt="Paket Platinum">
-                    <div class="card-body">
-                        <h5 class="card-title">Paket Platinum</h5>
-                        <p class="card-text">Untuk pesta megah dengan fasilitas eksklusif.</p>
-                        <div class="price-tag">Rp 12.000.000</div>
-                        <a href="paketplatinum.php" class="btn btn-detail">Lihat Detail</a>
-                    </div>
                 </div>
             </div>
         </div>
+        <?php endwhile; ?>
     </div>
+</div>
+
+
     <!-- WhatsApp Button -->
-    <div class="wa-button">
+    <div class="wa-button" style="position: fixed; bottom: 20px; right: 20px;">
         <a href="https://wa.me/6289506112503" target="_blank">
-            <img src="assets/img/whatsapp-icon.png" alt="Hubungi Kami via WhatsApp">
+            <img src="assets/img/whatsapp-icon.png" alt="Hubungi Kami via WhatsApp" style="height: 60px;">
         </a>
     </div>
-    <?php
-include 'footer.php'
-?>
-</body>
 
+    <?php include 'footer.php'; ?>
+</body>
 </html>

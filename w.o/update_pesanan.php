@@ -56,9 +56,10 @@ try {
     $metode = 'Lunas';
     $jumlah = (int)$jumlahPembayaran * 2;
     $id = (int)$id;
-    $sql2 = 'UPDATE pesanan set jumlahPembayaran = ? , metodePembayaran = ? where id = ?';
+    $status = 'diproses';
+    $sql2 = 'UPDATE pesanan set jumlahPembayaran = ? , statusPesanan = ? , metodePembayaran = ? where id = ?';
     $stmt2 = $koneksi->prepare($sql2);
-    $stmt2->bind_param("isi", $jumlah, $metode, $id);
+    $stmt2->bind_param("issi", $jumlah, $status , $metode, $id);
 
     if (!$stmt2) {
         throw new Exception('Prepare statement gagal: ' . $koneksi->error);

@@ -100,7 +100,7 @@ include 'header.php'
                     <li>📅 Konsultasi perencanaan + 2 kali meeting</li>
                 </ul>
 
-                <div class="price-tag">Rp 35.000.000</div>
+                <div class="price-tag">Rp 12.000.000</div>
 
                 <a href="https://wa.me/62xxxxxxxxxx" target="_blank" class="btn-cs">💬 Konsultasi via WhatsApp</a>
             </div>

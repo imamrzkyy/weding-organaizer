@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wedding Organizer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     body {
         font-family: 'Poppins', sans-serif;
@@ -158,6 +158,8 @@
 <body>
     <?php
     include 'header.php';
+$koneksi = new mysqli("localhost", "root", "", "wo_web");
+    $testimonies = $koneksi->query('select * from testimoni')
 ?>
 
     <!-- Hero Section -->
@@ -191,7 +193,7 @@
                 <div class="modal-body p-4">
                     <form action="" method="post" id="formPesanan">
                         <!-- Simulasi session -->
-                        <input type="hidden" name="idPelanggan" value="USR001">
+                        <input type="hidden" name="idPelanggan" value="<?= $_SESSION['ses_id'] ?>">
 
                         <div class="mb-3">
                             <label for="namaPelanggan" class="form-label">Nama Pelanggan</label>
@@ -506,46 +508,18 @@
 
             <div class="row g-4 mb-5">
                 <!-- Testimoni 1 -->
-                <div class="col-md-4">
+                <?php while($t = $testimonies->fetch_assoc()): ?>
+                    <div class="col-md-4">
                     <div class="card border-0 shadow-sm rounded-4 h-100">
                         <div class="card-body bg-white rounded-4">
-                            <p class="fst-italic mb-4">"Acara pernikahan kami sangat berkesan. Pelayanan yang
-                                luar biasa
-                                dari awal hingga akhir. Terima kasih banyak!"</p>
+                            <p class="fst-italic mb-4">"<?= $t['isiTestimoni'] ?>"</p>
                             <hr>
-                            <h6 class="fw-bold mb-0 text-maroon">Anita & Riko</h6>
-                            <small class="text-muted">Jakarta, 2024</small>
+                            <h6 class="fw-bold mb-0 text-maroon"><?= $t['namaPelanggan'] ?></h6>
+                            <small class="text-muted"><?= $t['tanggalTestimoni'] ?></small>
                         </div>
                     </div>
                 </div>
-
-                <!-- Testimoni 2 -->
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm rounded-4 h-100">
-                        <div class="card-body bg-white rounded-4">
-                            <p class="fst-italic mb-4">"Konsep dan dekorasi sangat sesuai dengan impian kami.
-                                Semua tamu
-                                pun sangat puas. Highly recommended!"</p>
-                            <hr>
-                            <h6 class="fw-bold mb-0 text-maroon">Dewi & Ardi</h6>
-                            <small class="text-muted">Bandung, 2024</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testimoni 3 -->
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm rounded-4 h-100">
-                        <div class="card-body bg-white rounded-4">
-                            <p class="fst-italic mb-4">"Tim WO sangat ramah dan profesional. Tidak ada yang
-                                perlu
-                                dikhawatirkan di hari H. Semua berjalan sempurna!"</p>
-                            <hr>
-                            <h6 class="fw-bold mb-0 text-maroon">Sarah & Dimas</h6>
-                            <small class="text-muted">Surabaya, 2025</small>
-                        </div>
-                    </div>
-                </div>
+                <?php endwhile; ?>
             </div>
 
             <!-- Form Tambah Testimoni -->
@@ -553,8 +527,8 @@
                 <h5 class="text-maroon mb-3">Buat Testimoni</h5>
                 <form action="proses_testimoni.php" method="POST">
                     <div class="mb-3">
-                        <label for="idPelanggan" class="form-label">ID Pelanggan</label>
-                        <input type="text" class="form-control" id="idPelanggan" name="idPelanggan" required>
+                        <label for="namaPelanggan" class="form-label">Nama Pelanggan</label>
+                        <input type="text" class="form-control" id="namaPelanggan" name="namaPelanggan" required>
                     </div>
                     <div class="mb-3">
                         <label for="isiTestimoni" class="form-label">Isi Testimoni</label>

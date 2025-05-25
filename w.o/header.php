@@ -1,132 +1,88 @@
 <?php
-    include 'config.php';
+if (session_status() === PHP_SESSION_NONE)
+    session_start();
 
-    // Hitung jumlah pesanan di keranjang
-    $jumlah_pesanan = 0;
-    if (isset($_SESSION['cart'])) {
-        $jumlah_pesanan = count($_SESSION['cart']);
+include 'config.php';
+
+// Ambil jumlah keranjang
+$jumlah_pesanan = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
+
+// Ambil data nama pelanggan dari session dan database
+$namaUser = "User";
+if (isset($_SESSION['ses_id'])) {
+    $idPelanggan = $_SESSION['ses_id'];
+    $query = mysqli_query($conn, "SELECT nama FROM pelanggan WHERE idPelanggan = '$idPelanggan'");
+    if ($query && mysqli_num_rows($query) > 0) {
+        $data = mysqli_fetch_assoc($query);
+        $namaUser = $data['nama'];
     }
+}
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<nav class="navbar navbar-expand-lg navbar-dark bg-maroon py-3">
+    <div class="container">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daftar Paket - Wedding Organizer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-        rel="stylesheet">
-    <style>
-    .navbar {
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-    }
+        <!-- Menu kiri -->
+        <ul class="navbar-nav me-auto d-flex flex-row gap-4">
+            <li class="nav-item"><a class="nav-link" href="index.php">HOME</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.php">ABOUT</a></li>
+            <li class="nav-item"><a class="nav-link" href="pricelist.php">PRICE LIST</a></li>
+        </ul>
 
-    .bg-maroon {
-        background-color: #4b0000;
-    }
+        <!-- Logo tengah -->
+        <a class="navbar-brand mx-auto d-none d-lg-block" href="index.php">
+            <img src="assets/img/STIKER ARTPRO.png" alt="Logo Sanggar Liza" style="max-height: 50px;" />
+        </a>
 
-    .navbar-nav .nav-link {
-        font-weight: 500;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-    }
+        <!-- Menu kanan -->
+        <ul class="navbar-nav ms-auto d-flex flex-row align-items-center gap-3">
 
-    .navbar .navbar-brand {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1;
-    }
-
-    .navbar-brand img {
-        max-height: 50px;
-    }
-
-    .nav-link.text-warning {
-        color: #F3C623 !important;
-    }
-
-    .nav-link:hover {
-        color: #F3C623 !important;
-    }
-
-    .cart-icon {
-        font-size: 1.2rem;
-        color: #F3C623;
-        display: flex;
-        align-items: center;
-        position: relative;
-    }
-
-    .cart-badge {
-        position: absolute;
-        top: -8px;
-        right: -10px;
-        background-color: #F3C623;
-        color: #4b0000;
-        border-radius: 50%;
-        padding: 2px 6px;
-        font-size: 0.75rem;
-        font-weight: bold;
-    }
-
-    .navbar-nav .nav-item {
-        display: flex;
-        align-items: center;
-    }
-
-    .navbar-nav .nav-link {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-    </style>
-</head>
-
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-maroon py-3">
-            <div class="container">
-
-                <!-- Kiri -->
-                <ul class="navbar-nav me-auto d-flex flex-row gap-4">
-                    <li class="nav-item"><a class="nav-link text-white" href="index.php">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="about.php">ABOUT</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="pricelist.php">Price list</a></li>
-                </ul>
-
-                <!-- Logo Tengah -->
-                <a class="navbar-brand mx-auto d-none d-lg-block">
-                    <img src="assets/img/STIKER ARTPRO.png" alt="Sanggar Liza Logo">
+            <!-- Keranjang -->
+            <li class="nav-item">
+                <a class="nav-link text-white position-relative" href="keranjang.php">
+                    <i class="bi bi-cart cart-icon"></i>
+                    <?php if ($jumlah_pesanan > 0): ?>
+                    <span class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+                        <?= $jumlah_pesanan ?>
+                    </span>
+                    <?php endif; ?>
                 </a>
+            </li>
 
-                <!-- Kanan -->
-                <ul class="navbar-nav ms-auto d-flex flex-row gap-4">
-                    <!-- Keranjang Belanja -->
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="keranjang.php">
-                            <i class="bi bi-cart cart-icon"></i>
-                            <span class="cart-badge"><?php echo $jumlah_pesanan; ?></span>
-                        </a>
-                    </li>
-
-                    <!-- Log Out -->
-                    <li class="nav-item"><a class="nav-link text-white" href="login.php">Log Out</a></li>
+            <!-- Dropdown Hai, Nama -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Hai, <strong><?= htmlspecialchars($namaUser) ?></strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="profil.php"><i class="bi bi-person-circle me-2"></i>Profil</a></li>
                 </ul>
+            </li>
 
-            </div>
-        </nav>
-    </header>
+            <!-- Tombol Logout -->
+            <li class="nav-item">
+                <a href="login.php" class="btn btn-warning text-dark fw-semibold px-3 py-1">Log Out</a>
+            </li>
+        </ul>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    </div>
+</nav>
 
-</html>
+<style>
+.bg-maroon {
+    background-color: #4b0000;
+}
+.cart-icon {
+    font-size: 1.2rem;
+    color: #F3C623;
+}
+.cart-badge {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.navbar-nav .nav-link:hover {
+    color: #F3C623 !important;
+}
+</style>
+

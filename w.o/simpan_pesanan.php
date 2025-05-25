@@ -37,6 +37,7 @@ $metodePembayaran = $_POST['metodePembayaran'] ?? '';
 $jumlahPembayaran = $_POST['jumlahPembayaran'] ?? '';
 $transactionId = $_POST['transactionId'] ?? null;
 $statusPembayaran = $_POST['statusPembayaran'] ?? 'pending'; // Default value
+$statusPesanan = 'diproses';
 
 // Validasi data
 if (

@@ -6,7 +6,7 @@ include 'header.php';
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Paket Silver - Wedding Organizer</title>
+  <title>Paket Diamon - Wedding Organizer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -85,7 +85,7 @@ include 'header.php';
 
       <!-- Detail Paket -->
       <div class="col-md-6 d-flex flex-column justify-content-center" style="min-height: 100%; margin-top: -140px;">
-        <h1 class="detail-title">Paket Silver</h1>
+        <h1 class="detail-title">Paket Diamon</h1>
         <p class="text-muted">Paket ekonomis dan intimate untuk acara pernikahan sederhana namun berkesan.</p>
 
         <ul class="package-features">
@@ -98,7 +98,7 @@ include 'header.php';
           <li>📅 Konsultasi perencanaan + 1 kali meeting</li>
         </ul>
 
-        <div class="price-tag">Rp 5.000.000</div>
+        <div class="price-tag">Rp 7.000.000</div>
 
         <a href="https://wa.me/62895636125652" target="_blank" class="btn-cs">💬 Konsultasi via WhatsApp</a>
       </div>

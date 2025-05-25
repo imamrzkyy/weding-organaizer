@@ -1,5 +1,6 @@
 <?php
 include 'header.php'
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -100,7 +101,7 @@ include 'header.php'
                     <li>📅 Konsultasi perencanaan + 1 kali meeting</li>
                 </ul>
 
-                <div class="price-tag">Rp 25.000.000</div>
+                <div class="price-tag">Rp 8.000.000</div>
 
                 <a href="https://wa.me/62xxxxxxxxxx" target="_blank" class="btn-cs">💬 Konsultasi via WhatsApp</a>
             </div>
